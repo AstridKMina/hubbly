@@ -10,7 +10,6 @@ const apiArticles = axios.create({
 export const getArticles = async () => {
     try {
         const res = await apiArticles.get("/articles");
-        // console.log(res.data)
         return res.data
     } catch (error) {
         console.error("Error fetching articles:", error.message); 
@@ -24,9 +23,18 @@ export const getSoloArticle = async (id) => {
         const res = await apiArticles.get(`articles/${id}`)
         return res.data
     } catch (error) {
-        console.error("Error fetching articles:", error.message); 
+        console.error("Error fetching article:", error.message); 
         throw new Error("Failed to fetch articles");
     }
 }
 
-getSoloArticle(1)
+export const getArticleComments = async (id) => {
+    try {
+        const res = await apiArticles.get(`articles/${id}/comments`)
+        return res.data
+    } catch (error) {
+        console.error("Error fetching article comments:", error.message); 
+        throw new Error("Failed to fetch articles");
+    }
+}
+

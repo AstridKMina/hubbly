@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { getSoloArticle } from "../services/api"
 import { useParams } from "react-router-dom";
+import { ArticleCommentsPage } from "./ArticleCommentsPage";
 
 
 export const SoloArticlePage = () => {
@@ -31,29 +32,35 @@ export const SoloArticlePage = () => {
     }
 
 
-    return (
-        <section className="article-container">
-            <header className="article-header">
-                <h1>{article.title}</h1>
 
-            </header>
-
-            <main className="article-content">
-                <img
-                    src={article.article_img_url}
-                    alt={article.title}
-                    className="article-image"
-                />
+    
+ 
+        return (
+            <article className="article-container">
+                <header className="article-header">
+                    <h1>{article.title}</h1>
+                </header>
+    
+                <main className="article-content">
+                    <img
+                        src={article.article_img_url}
+                        alt={article.title}
+                        className="article-image"
+                    />
                     <div className="article-meta">
-                        <p className="article-author">By: {article.author}</p>
+                        <p className="article-author"><strong>By:</strong> {article.author}</p>
                         <p><strong>Topic:</strong> {article.topic}</p>
                         <p><strong>Votes:</strong> {article.votes}</p>
                         <p><strong>Comments:</strong> {article.comment_count}</p>
-                        <p><strong>Published on:</strong> {new Date(article.created_at).toLocaleDateString()}</p>
+                        <p><strong>Published on:</strong> <time>{new Date(article.created_at).toLocaleDateString()}</time></p>
                     </div>
-           
-                <p className="article-body">{article.body}</p>
-            </main>
-        </section>
-    );
-};
+                    <p className="article-body">{article.body}</p>
+                    <ArticleCommentsPage />
+                </main>
+    
+                <footer className="article-footer">
+                    <p>End of the article</p>
+                </footer>
+            </article>
+        );
+    };

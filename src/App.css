@@ -19,22 +19,13 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  text-align: center;
 }
 
 .articles-list {
   list-style: none;
   padding: 0;
   margin: 2rem;
-}
-
-.article-item {
-  display: flex;
-  flex-direction: column; 
-  align-items: center;
-  gap: 15px;
-  padding: 15px;
-  border-bottom: 1px solid #ddd;
-  text-align: center;
 }
 
 .article-card-image {
@@ -65,24 +56,107 @@
 
 /* SoloArticlePage */
 
-
-.article-meta{
-
+.article-container {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  background-color: #fff;
+  
+}
+
+ .article-meta{
+
+display: flex;
 justify-content: space-around;
+gap: 2rem;
 margin: 2rem;
 }
 
 
-.article-image main{
+.article-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 0 auto;
   text-align: center;
 }
+
+
+.article-header h1 {
+  font-size: 2rem;
+}
+
+.article-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+.article-body {
+  text-align: justify;
+  padding: 1rem 8rem;
+}
+
+/* ArticleComments */
+
+ .comments-section {
+  display: flex;
+  flex-direction: column;
+
+  max-width: 60%;
+
+  margin-top: 40px;
+  text-align: left;
+}
+
+.comments-list {
+  background-color: rgb(234, 238, 239);
+box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+border-radius: 0.5rem;
+}
+
+.comment-item {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+  
+  margin: 1rem;
+  list-style: none;
+}
+
+.comments-list p {
+margin: 0.5rem;
+text-align: justify;
+}
+
+.comment-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.comment-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.commment-votes-button {
+  background-color: #fff;
+  margin: 1rem;
+  width: 5rem;
+}
+
+
+
+
 @media (max-width: 768px) {
-  .article-item {
-    flex-direction: row; 
-    text-align: left;
-  }
 
   .article-image {
     width: 120px;
