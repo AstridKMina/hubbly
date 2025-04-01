@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { getSoloArticle, updateArticleVotes } from "../services/api"
 import { useParams } from "react-router-dom";
 import { ArticleCommentsPage } from "./ArticleCommentsPage";
+import { CreateArticleComment } from "../components/CreateArticleComment";
 
 
 export const SoloArticlePage = () => {
@@ -82,6 +83,7 @@ const [error, setError] = useState(null)
                     <p><strong>Published on:</strong> <time>{new Date(article.created_at).toLocaleDateString()}</time></p>
                 </div>
                 <p className="article-body">{article.body}</p>
+               
                 <ArticleCommentsPage />
             </main>
 

@@ -15,7 +15,7 @@ export const ArticlesPage = () => {
             try {
                 const articlesData = await getArticles();
                 console.log(articlesData);
-                setArticles(articlesData);
+                setArticles(articlesData)
             } catch (error) {
                 console.error("Error fetching articles:", error);
             } finally {
@@ -28,7 +28,7 @@ export const ArticlesPage = () => {
     }, []);
 
     if (loading) {
-        return <p className="loadinng">loading......</p>
+        return <p>loading......</p>
     }
 
     return (

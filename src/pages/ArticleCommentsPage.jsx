@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react"
 import { getArticleComments } from "../services/api"
 import { useParams } from "react-router-dom";
+import { CreateArticleComment } from "../components/CreateArticleComment";
 
 
 export const ArticleCommentsPage = () => {
 
     const [comments, setComments] = useState([]);
+    const [optimisticComments, setOptimisticComments] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null)
+
 
 
     const { id } = useParams();
@@ -18,7 +22,8 @@ export const ArticleCommentsPage = () => {
                 const commentsData = await getArticleComments(id);
                 setComments(commentsData);
             } catch (error) {
-                console.error("Error fetching articles:", error);
+                console.error("Error fetching comments:", error);
+            setError("Failed to load comments. Sorry ")
             } finally {
                 setLoading(false);
             }
@@ -28,10 +33,18 @@ export const ArticleCommentsPage = () => {
 
 
     if (loading) {
-        return <p className="loadinng">loading......</p>
+        return <p className="loading">loading comments......</p>
+    }
+
+    if (error) {
+        return <p className="error">{error}</p>
     }
 
     return (
+        <>
+        <section id="new-comment">
+             <CreateArticleComment id={id} comments={comments} setComments={setComments} setOptimisticComments={setOptimisticComments}/>
+        </section>
         <section className="comments-section">
             <h2>Comments</h2>
             <ul className="comments-list">
@@ -62,6 +75,7 @@ export const ArticleCommentsPage = () => {
                 ))}
             </ul>
         </section>
+        </>
     );
 };
 

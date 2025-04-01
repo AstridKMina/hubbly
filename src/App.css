@@ -13,6 +13,12 @@
   background-color:coral;
 }
 
+.user-header-avatar {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
 /* ArticlesList */
 
 .articles-container {
@@ -169,8 +175,72 @@ text-align: justify;
   text-align: center;
 }
 
+/* CreateArticleComment */
+
+#new-comment {
+  width: 100%;
+}
+
+.new-comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+#new-comment-textarea {
+  width: 60%;
+  height: 5rem;
+  border: 0.1rem black solid;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.new-comment-submit-button {
+  background-color: black;
+  color: whitesmoke;
+  width: 4rem;
+  height: 2rem;
+}
 
 
+/* UserPage */
+
+.users-page h2 {
+text-align: center;
+}
+
+/* UserList */
+
+.users-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+
+/* UserCard */
+
+.user-item {
+  width: 15rem;
+  height: 15rem;
+  background-color: #b0a49b;
+  border-radius: 0.5rem;
+  margin: 3rem;
+  list-style: none;
+}
+
+.user-card {
+  display: block;
+  margin: 1rem;
+  padding: 2rem;
+}
+
+.user-card-avatar {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
 
 @media (max-width: 768px) {
 
