@@ -38,3 +38,13 @@ export const getArticleComments = async (id) => {
     }
 }
 
+export const updateArticleVotes = async (id, votes) => {
+    try {
+        const res = await apiArticles.patch(`articles/${id}/`, {inc_votes:votes})
+        return res.data
+    } catch (error) {
+        console.error("Error fetching article body:", error.message); 
+        throw new Error("Failed to fetch article body");
+    }
+}
+

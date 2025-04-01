@@ -99,6 +99,17 @@ margin: 2rem;
   margin: 20px 0;
 }
 
+.article-votes {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.article-votes-button {
+  width: 4rem;
+  height: auto;
+}
+
 .article-body {
   text-align: justify;
   padding: 1rem 8rem;
@@ -147,10 +158,15 @@ text-align: justify;
   border-radius: 50%;
 }
 
-.commment-votes-button {
-  background-color: #fff;
+.comment-votes {
+  display: flex;
   margin: 1rem;
-  width: 5rem;
+  justify-content: center;
+}
+
+.comment-votes-button {
+  background-color: #fff;
+  text-align: center;
 }
 
 

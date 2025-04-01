@@ -49,12 +49,15 @@ export const ArticleCommentsPage = () => {
                             </div>
                         </div>
                         <p className="comment-body">{comment.body}</p>
-                        <button className="commment-votes-button">
-                            <p>vote up</p>
+                        <div className="comment-votes">
+                        <button className="comment-votes-button">
+                            <p>👍🏾</p>
                         </button>
-                        <button className="commment-votes-button">
-                            <p>vote down</p>
+                        <p>Votes: {comment.votes}</p>
+                        <button className="comment-votes-button">
+                            <p>👎🏾</p>
                         </button>
+                        </div>
                     </li>
                 ))}
             </ul>
