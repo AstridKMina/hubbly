@@ -70,4 +70,12 @@ export const createComment = async (id, commentData) => {
     };
 };
 
-// createComment(1, {username: "tickle122" , body: "Awesome article"})
+export const deleteComment = async (commentId) => {
+    try {
+        const res = await apiArticles.delete(`/comments/${commentId}`);
+        return res.data;
+    } catch (error) {
+        console.error("Error creating article comment:", error.message); 
+        throw new Error("Error deleting comment: " + error.message);
+    }
+};

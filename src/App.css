@@ -164,15 +164,127 @@ text-align: justify;
   border-radius: 50%;
 }
 
-.comment-votes {
+/* .comment-votes {
   display: flex;
   margin: 1rem;
   justify-content: center;
-}
+} */
 
 .comment-votes-button {
   background-color: #fff;
   text-align: center;
+} 
+
+/* CreateArticleComment */
+
+#new-comment {
+  width: 100%;
+}
+
+.new-comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+#new-comment-textarea {
+  width: 60%;
+  height: 5rem;
+  border: 0.1rem black solid;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+
+.new-comment-submit-button {
+  background-color: black;
+  color: whitesmoke;
+  width: 4rem;
+  height: 2rem;
+}
+
+
+/* UserPage */
+
+.users-page h2 {
+text-align: center;
+}
+
+/* UserList */
+
+.users-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+
+/* UserCard */
+
+.user-item {
+  width: 15rem;
+  height: 15rem;
+  background-color: #b0a49b;
+  border-radius: 0.5rem;
+  margin: 3rem;
+  list-style: none;
+}
+
+.user-card {
+  display: block;
+  margin: 1rem;
+  padding: 2rem;
+}
+
+.user-card-avatar {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+.comment-votes {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  justify-content: center;
+}
+
+.comment-votes-button {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: 0.08rem black solid;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease-in-out;
+}
+
+.comment-votes-button:hover {
+  background-color: #c8abab;
+}
+
+.comment-votes-button:active {
+  transform: scale(0.95);
+}
+
+.comment-delete-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  height: 2rem;
+  padding: 1px 6px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease-in-out;
+}
+
+.comment-delete-button:hover {
+  background-color: #cc0000;
+}
+
+.comment-delete-button:active {
+  transform: scale(0.95);
 }
 
 /* CreateArticleComment */
@@ -201,6 +313,15 @@ text-align: justify;
   color: whitesmoke;
   width: 4rem;
   height: 2rem;
+  border-radius: 0.2rem;
+}
+
+.new-comment-submit-button:hover {
+  background-color: #58817a;
+}
+
+.new-comment-submit-button:active {
+  transform: scale(0.95);
 }
 
 

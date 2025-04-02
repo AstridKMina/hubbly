@@ -21,4 +21,7 @@ const navigate = useNavigate();
     return <UserContext.Provider value={{ loggedInUser: loggedInUser, setLoggedInUser:loginUser}}>
         {children}
     </UserContext.Provider>
+
 };
+
+

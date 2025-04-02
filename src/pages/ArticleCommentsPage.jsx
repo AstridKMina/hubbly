@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react"
-import { getArticleComments } from "../services/api"
+import { useContext, useEffect, useState } from "react"
+import { deleteComment, getArticleComments } from "../services/api"
 import { useParams } from "react-router-dom";
 import { CreateArticleComment } from "../components/CreateArticleComment";
+import { UserContext } from "../context/UserPageContext";
 
 
 export const ArticleCommentsPage = () => {
@@ -9,7 +10,10 @@ export const ArticleCommentsPage = () => {
     const [comments, setComments] = useState([]);
     const [optimisticComments, setOptimisticComments] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null)
+    const [error, setError] = useState(null);
+    const [deletingCommentId, setDeletingCommentId] = useState(null);
+
+    const {loggedInUser, setLoggedInUser,} = useContext(UserContext);
 
 
 
@@ -23,7 +27,7 @@ export const ArticleCommentsPage = () => {
                 setComments(commentsData);
             } catch (error) {
                 console.error("Error fetching comments:", error);
-            setError("Failed to load comments. Sorry ")
+                setError("Failed to load comments. Sorry ")
             } finally {
                 setLoading(false);
             }
@@ -40,41 +44,72 @@ export const ArticleCommentsPage = () => {
         return <p className="error">{error}</p>
     }
 
+
+    const handleDelete = async (comment_id) => {
+        setDeletingCommentId(comment_id);
+        try {
+            await deleteComment(comment_id);
+
+            setComments((prevComments) =>
+                prevComments.filter((comment) => comment.comment_id !== comment_id)
+            );
+
+            setOptimisticComments((prevComments) =>
+                prevComments.filter((comment) => comment.comment_id !== comment_id)
+            );
+
+        } catch (error) {
+            console.error("The comment has not been deleted", error.message);
+            setError("Failed to delete comment.");
+        } finally {
+            setDeletingCommentId(null);
+        }
+    };
+
     return (
         <>
-        <section id="new-comment">
-             <CreateArticleComment id={id} comments={comments} setComments={setComments} setOptimisticComments={setOptimisticComments}/>
-        </section>
-        <section className="comments-section">
-            <h2>Comments</h2>
-            <ul className="comments-list">
-                {comments.map((comment) => (
-                    <li key={comment.comment_id} className="comment-item">
-                        <div className="comment-author">
-                            <img
-                                className="comment-avatar"
-                                src="https://cdn-icons-png.flaticon.com/256/5953/5953843.png"
-                                alt="User avatar"
-                            />
-                            <div>
-                                <h4>{comment.author}</h4>
-                                <time>{new Date(comment.created_at).toLocaleDateString()}</time>
+            <section id="new-comment">
+                <CreateArticleComment id={id} comments={comments} setComments={setComments} setOptimisticComments={setOptimisticComments} />
+            </section>
+            <section className="comments-section">
+                <h2>Comments</h2>
+                <ul className="comments-list">
+                    {comments.map((comment) => (
+                        <li key={comment.comment_id} className="comment-item">
+                            <div className="comment-author">
+                                <img
+                                    className="comment-avatar"
+                                    src="https://cdn-icons-png.flaticon.com/256/5953/5953843.png"
+                                    alt="User avatar"
+                                />
+                                <div>
+                                    <h4>{comment.author}</h4>
+                                    <time>{new Date(comment.created_at).toLocaleDateString()}</time>
+                                </div>
                             </div>
-                        </div>
-                        <p className="comment-body">{comment.body}</p>
-                        <div className="comment-votes">
-                        <button className="comment-votes-button">
-                            <p>👍🏾</p>
-                        </button>
-                        <p>Votes: {comment.votes}</p>
-                        <button className="comment-votes-button">
-                            <p>👎🏾</p>
-                        </button>
-                        </div>
-                    </li>
-                ))}
-            </ul>
-        </section>
+                            <p className="comment-body">{comment.body}</p>
+                            <div className="comment-votes">
+                                <button className="comment-votes-button">
+                                    <p>👍🏾</p>
+                                </button>
+                                <p>Votes: {comment.votes}</p>
+                                <button className="comment-votes-button">
+                                    <p>👎🏾</p>
+                                </button>
+                            </div>
+                            {loggedInUser && loggedInUser.username === comment.author && (
+                            <button
+                                className="comment-delete-button"
+                                onClick={() => handleDelete(comment.comment_id)}
+                                disabled={deletingCommentId === comment.comment_id}
+                            >
+                                {deletingCommentId === comment.comment_id ? "Deleting..." : "Delete ☠️"}
+                            </button>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            </section>
         </>
     );
 };
