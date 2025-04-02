@@ -7,11 +7,15 @@ const apiArticles = axios.create({
 })
 
 
-export const getArticles = async (articleTopic) => {
+export const getArticles = async (sortBy, orderBy, articleTopic) => {
     try {
-        const res = await apiArticles.get(`/articles`, { params: 
-            { topic: articleTopic}
-        });
+        const params = {};
+        
+        if (articleTopic) params.topic = articleTopic;
+        if (sortBy) params.sort_by = sortBy;
+        if (orderBy) params.order = orderBy;
+
+        const res = await apiArticles.get(`/articles`, { params }); 
         return res.data;
     } catch (error) {
         console.error("Error fetching articles:", error.message); 
@@ -84,7 +88,6 @@ export const deleteComment = async (commentId) => {
 export const getTopics = async () => {
     try {
         const res = await apiArticles.get("/topics/");
-        console.log(res.data)
         return res.data
     } catch (error) {
         console.error("Error fetching topics:", error.message); 
