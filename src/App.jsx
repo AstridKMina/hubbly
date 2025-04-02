@@ -6,21 +6,22 @@ import { Route, Router, Routes } from 'react-router-dom'
 import { HomePage } from './pages/HomePage'
 import { UserProvider } from './context/UserPageContext'
 import { UserPage } from './pages/UsersPage'
+import { TopicList } from './components/TopicList'
 
 function App() {
 
 
   return (
     <>
-    <UserProvider>
-      <Header />
-
-      <Routes>
-        {/* <Route path='/' element={<HomePage />} /> */}
-        <Route path='/' element={<ArticlesPage />} />
-        <Route path='/articles/:id' element={<SoloArticlePage />} />
-        <Route path='/users' element={<UserPage />} />
-      </Routes>
+      <UserProvider>
+        <Header />
+        <TopicList />
+        <Routes>
+          {/* <Route path='/' element={<HomePage />} /> */}
+          <Route path='/' element={<ArticlesPage />} />
+          <Route path='/articles/:id' element={<SoloArticlePage />} />
+          <Route path='/users' element={<UserPage />} />
+        </Routes>
       </UserProvider>
     </>
   );

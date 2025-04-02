@@ -7,21 +7,22 @@ const apiArticles = axios.create({
 })
 
 
-export const getArticles = async () => {
+export const getArticles = async (articleTopic) => {
     try {
-        const res = await apiArticles.get("/articles");
-        return res.data
+        const res = await apiArticles.get(`/articles`, { params: 
+            { topic: articleTopic}
+        });
+        return res.data;
     } catch (error) {
         console.error("Error fetching articles:", error.message); 
         throw new Error("Failed to fetch articles");
-    }
-   
+    } 
 }
 
 export const getSoloArticle = async (id) => {
     try {
-        const res = await apiArticles.get(`articles/${id}`)
-        return res.data
+        const res = await apiArticles.get(`articles/${id}`);
+        return res.data;
     } catch (error) {
         console.error("Error fetching article:", error.message); 
         throw new Error("Failed to fetch article");
@@ -77,5 +78,16 @@ export const deleteComment = async (commentId) => {
     } catch (error) {
         console.error("Error creating article comment:", error.message); 
         throw new Error("Error deleting comment: " + error.message);
+    }
+};
+
+export const getTopics = async () => {
+    try {
+        const res = await apiArticles.get("/topics/");
+        console.log(res.data)
+        return res.data
+    } catch (error) {
+        console.error("Error fetching topics:", error.message); 
+        throw new Error("Error: " + error.message);
     }
 };
