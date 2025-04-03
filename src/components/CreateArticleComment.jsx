@@ -2,19 +2,22 @@ import { useContext, useState } from "react";
 import { createComment } from "../services/api";
 import { UserContext } from "../context/UserPageContext";
 import { toast } from "react-toastify";
+import { ErrorContext } from "../context/ErrorContext";
 
 export const CreateArticleComment = ({ id, comments, setComments, setOptimisticComments }) => {
     const { loggedInUser } = useContext(UserContext);
     const [newComment, setNewComment] = useState("");
     const [submitting, setSubmitting] = useState(false);
-    const [error, setError] = useState(null);
+    // const [error, setError] = useState(null);
+
+    const {error,setErrorMessage} = useContext(ErrorContext);
 
     const handleSubmitComment = async (e) => {
         e.preventDefault();
-        setError(null);
+        setErrorMessage(null);
 
         if (!newComment.trim()) {
-            setError("Comment can't be empty");
+            setErrorMessage("Comment can't be empty");
             return;
         }
 
@@ -28,6 +31,7 @@ export const CreateArticleComment = ({ id, comments, setComments, setOptimisticC
             const comment = await createComment(id, { body: newComment, username: loggedInUser.username });
 
             setComments((prevComments) => {
+                comment.votes = 0;
                 return [comment, ...prevComments];
             });
 
@@ -39,7 +43,7 @@ export const CreateArticleComment = ({ id, comments, setComments, setOptimisticC
             toast.success("Comment created successfully!");
         } catch (error) {
             console.error("Error creating a new comment", error.message);
-            setError(error.message || "Failed to post comment. Please try again");
+            setErrorMessage(error.message || "Failed to post comment. Please try again");
 
             toast.error("Failed to post comment. Please try again");
         } finally {
@@ -54,9 +58,9 @@ export const CreateArticleComment = ({ id, comments, setComments, setOptimisticC
         const regex = /\S/;
 
         if (!regex.test(value)) {
-            setError("Comment can't be empty or just spaces");
+            setErrorMessage("Comment can't be empty or just spaces");
         } else {
-            setError(null);
+            setErrorMessage(null);
         }
     };
 

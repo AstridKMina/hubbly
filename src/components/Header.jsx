@@ -4,7 +4,7 @@ import { UserContext } from "../context/UserPageContext";
 
 export const Header = () => {
 
-        const {loggedInUser, setLoggedInUser,} = useContext(UserContext);
+        const {loggedInUser, setLoggedInUser} = useContext(UserContext);
 
        const isUserLogged = (loggedInUser && Object.keys(loggedInUser).length > 0)
 

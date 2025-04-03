@@ -3,6 +3,7 @@ import { deleteComment, getArticleComments } from "../services/api"
 import { useParams } from "react-router-dom";
 import { CreateArticleComment } from "../components/CreateArticleComment";
 import { UserContext } from "../context/UserPageContext";
+import { ErrorContext } from "../context/ErrorContext";
 
 
 export const ArticleCommentsPage = () => {
@@ -10,10 +11,13 @@ export const ArticleCommentsPage = () => {
     const [comments, setComments] = useState([]);
     const [optimisticComments, setOptimisticComments] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    // const [error, setError] = useState(null);
     const [deletingCommentId, setDeletingCommentId] = useState(null);
 
-    const {loggedInUser, setLoggedInUser,} = useContext(UserContext);
+    const {loggedInUser, setLoggedInUser} = useContext(UserContext);
+
+    const {error,setErrorMessage} = useContext(ErrorContext);
+    
 
 
 
@@ -26,8 +30,7 @@ export const ArticleCommentsPage = () => {
                 const commentsData = await getArticleComments(id);
                 setComments(commentsData);
             } catch (error) {
-                console.error("Error fetching comments:", error);
-                setError("Failed to load comments. Sorry ")
+                setErrorMessage(error.message || "Something went wrong!");
             } finally {
                 setLoading(false);
             }
@@ -38,10 +41,6 @@ export const ArticleCommentsPage = () => {
 
     if (loading) {
         return <p className="loading">loading comments......</p>
-    }
-
-    if (error) {
-        return <p className="error">{error}</p>
     }
 
 
@@ -60,7 +59,7 @@ export const ArticleCommentsPage = () => {
 
         } catch (error) {
             console.error("The comment has not been deleted", error.message);
-            setError("Failed to delete comment.");
+            setErrorMessage(error.message || "Something went wrong!");
         } finally {
             setDeletingCommentId(null);
         }

@@ -7,6 +7,8 @@ import { HomePage } from './pages/HomePage'
 import { UserProvider } from './context/UserPageContext'
 import { UserPage } from './pages/UsersPage'
 import { TopicList } from './components/TopicList'
+import { ErrorProvider } from './context/ErrorContext'
+import { ErrorNotification } from './components/ErrorNotification'
 
 function App() {
 
@@ -14,17 +16,21 @@ function App() {
   return (
     <>
       <UserProvider>
-        <Header />
-        <TopicList />
-        <Routes>
-          {/* <Route path='/' element={<HomePage />} /> */}
-          <Route path='/' element={<ArticlesPage />} />
-          <Route path='/articles/:id' element={<SoloArticlePage />} />
-          <Route path='/users' element={<UserPage />} />
-        </Routes>
+        <ErrorProvider>
+          <Header />
+          <TopicList />
+          <ErrorNotification/>
+          <Routes>
+            {/* <Route path='/' element={<HomePage />} /> */}
+            <Route path='/' element={<ArticlesPage />} />
+            <Route path='/articles/:id' element={<SoloArticlePage />} />
+            <Route path='/users' element={<UserPage />} />
+          </Routes>
+        </ErrorProvider>
       </UserProvider>
     </>
   );
 }
+
 
 export default App

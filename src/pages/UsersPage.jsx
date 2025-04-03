@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from "react"
 import { getUsers } from "../services/api";
 import { UsersList } from "../components/UsersList";
+import { ErrorContext } from "../context/ErrorContext";
 
 export const UserPage = () => {
 
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    const { error, setErrorMessage } = useContext(ErrorContext);
 
     useEffect(() => {
 
@@ -15,9 +16,9 @@ export const UserPage = () => {
                 const usersData = await getUsers();
                 setUsers(usersData);
             } catch (error) {
-                console.error("Error fetching users")
+                setErrorMessage(error.message || "Something went wrong!")
             } finally {
-                setLoading(false)
+                setLoading(false);
             }
         }
         fetchUsers();
@@ -29,8 +30,7 @@ export const UserPage = () => {
 
     return (
         <section className="users-page">
-        <UsersList  users={users}/>
-
+            <UsersList users={users} />
         </section>
     )
 

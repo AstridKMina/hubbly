@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { getArticles } from "../services/api"
 import { ArticlesList } from "../components/ArticlesList";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { ErrorContext } from "../context/ErrorContext";
 
 
 export const ArticlesPage = () => {
@@ -10,11 +11,14 @@ export const ArticlesPage = () => {
     const [loading, setLoading] = useState(true);
     const [sort_by, setSort_by] = useState("")
     const [order_by, setOrder_by] = useState("")
+    // const [error, setError] = useState(null)
+
+        const {error,setErrorMessage} = useContext(ErrorContext);
+    
 
     const [searchParams, setSearchParams] = useSearchParams()
 
     const articleTopic = searchParams.get("topic");
-    const navigate = useNavigate()
 
     // console.log(articleTopic, "a ver ese topic")
 
@@ -24,11 +28,15 @@ export const ArticlesPage = () => {
 
     useEffect(() => {
         const fetchArticles = async () => {
+            setLoading(true);
+            setErrorMessage(null);
+
             try {
                 const articlesData = await getArticles(sort_by, order_by, articleTopic);
                 setArticles(articlesData)
             } catch (error) {
-                console.error("Error fetching articles:", error);
+                console.error('Error fetching articles:', error);
+                setErrorMessage(error.message || "Something went wrong!")
             } finally {
                 setLoading(false)
             }
@@ -40,24 +48,23 @@ export const ArticlesPage = () => {
 
 
     if (loading) {
-        return <p>loading......</p>
+        return <p>loading articles......</p>
     }
 
-    
     const handleSortChange = (e) => {
         let { value, name } = e.target;
-    
-    
+
+
         setSearchParams((prevParams) => {
             const updatedParams = new URLSearchParams(prevParams);
-    
+
             if (name === "sort_by") {
                 if (value === "Date") value = "created_at";
                 if (value === "Comment count") value = "comment_count";
                 updatedParams.set("sort_by", value);
-               
+
             }
-    
+
             if (name === "order") {
                 updatedParams.set("order", value);
             }
@@ -68,11 +75,11 @@ export const ArticlesPage = () => {
 
             return updatedParams;
         });
-    
-      
+
+
         if (name === "sort_by") {
             setSort_by(value);
-        } 
+        }
         if (name === "order") {
             setOrder_by(value);
         }
@@ -84,7 +91,7 @@ export const ArticlesPage = () => {
         <section className="articles-container">
             <h2>Articles</h2>
 
-            <select  name="sort_by" id="sort-by-select" onChange={handleSortChange}
+            <select name="sort_by" id="sort-by-select" onChange={handleSortChange}
                 value={sort_by}
             >
                 <option value="">Sort by</option>
@@ -93,7 +100,7 @@ export const ArticlesPage = () => {
                 ))}
             </select>
 
-            <select  name="order" id="order-select" onChange={handleSortChange}
+            <select name="order" id="order-select" onChange={handleSortChange}
                 value={order_by}
             >
                 <option value="">Order by</option>

@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { getSoloArticle, updateArticleVotes } from "../services/api"
 import { useParams } from "react-router-dom";
 import { ArticleCommentsPage } from "./ArticleCommentsPage";
 import { CreateArticleComment } from "../components/CreateArticleComment";
+import { ErrorContext } from "../context/ErrorContext";
 
 
 export const SoloArticlePage = () => {
@@ -10,10 +11,11 @@ export const SoloArticlePage = () => {
     const [article, setArticle] = useState({});
     const [loading, setLoading] = useState(true);
     const [optimisticVotes, setOptimisticVotes] = useState(0);
-const [error, setError] = useState(null)
+// const [error, setError] = useState(null)
 
-
-    const { id } = useParams();
+const {error,setErrorMessage} = useContext(ErrorContext);
+   
+const { id } = useParams();
 
     useEffect(() => {
 
@@ -23,7 +25,7 @@ const [error, setError] = useState(null)
                 setArticle(articleData)
                 setOptimisticVotes(articleData.votes)
             } catch (error) {
-                console.error("Error fetching articles:", error);
+                setErrorMessage(error.message || "Something went wrong!");
             } finally {
                 setLoading(false)
             }
@@ -49,7 +51,7 @@ const [error, setError] = useState(null)
         } catch (err) {
             console.error("Error updating votes:", error.message);
             setOptimisticVotes(prevVotes => prevVotes - vote); 
-            setError("Error updating the article votes")
+            setErrorMessage(error.message || "Something went wrong!")
         }
 
         return error

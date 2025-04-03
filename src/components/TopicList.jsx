@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getTopics } from "../services/api";
 import { Link } from "react-router-dom";
+import { ErrorContext } from "../context/ErrorContext";
 
 
 export const TopicList = () => {
 
     const [topics, setTopics] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null)
+    // const [error, setError] = useState(null)
 
+    const {error,setErrorMessage} = useContext(ErrorContext);
 
 
     useEffect(() => {
@@ -19,8 +21,7 @@ export const TopicList = () => {
                 setTopics(topicData)
 
             } catch (error) {
-                console.error("Error fetching topics", error.message)
-                setError("Error" + error.message)
+                setErrorMessage(error.message || "Something went wrong!")
             } finally {
                 setLoading(false);
             }
@@ -28,9 +29,6 @@ export const TopicList = () => {
         fetchTopics()
     }, [])
 
-    if (error) {
-        return <p className="error">{error}</p>
-    }
 
     if (loading) {
         return <p className="loadinng">loading topics......</p>
