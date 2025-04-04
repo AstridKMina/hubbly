@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserPageContext";
 import { UserLoginModal } from "../pages/UserLoginModal";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
     const { loggedInUser } = useContext(UserContext);
@@ -32,7 +32,9 @@ export const Header = () => {
                         </>
                     ) : (
                         <>
+                        <Link to={"/new-article"} onClick={()=> setIsVisible(false)}>
                          <h1>✍🏾</h1>
+                         </Link>
                             <img 
                                 className="user-header-avatar" 
                                 src={loggedInUser.avatar_url} 

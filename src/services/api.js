@@ -94,7 +94,7 @@ export const deleteComment = async (commentId) => {
         return res.data;
       } catch (error) {
         throw handleApiError(error, "Failed to delete comment");
-      }
+      };
 };
 
 export const getTopics = async () => {
@@ -103,5 +103,23 @@ export const getTopics = async () => {
         return res.data
     } catch (error) {
         throw handleApiError(error, "Failed to fetch Topics");
-    }
+    };
+};
+
+export const createArticle = async (newArticle) => {
+    try {
+        const res = await apiArticles.post("/articles", newArticle);
+        return res.data;
+    } catch (error) {
+        throw handleApiError(error, "Failed to create a new article");
+    };
+};
+
+export const getUser = async (user_id) => {
+    try {
+        const res = await apiArticles.get(`/users/${user_id}`);
+        return res.data
+    } catch (error) {
+        throw handleApiError(error, "Failed to fetch User");
+    };
 };

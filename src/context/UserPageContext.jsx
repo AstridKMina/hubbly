@@ -5,7 +5,6 @@ export const UserContext = createContext();
 
 export const UserProvider = ({children}) => {
     const [loggedInUser, setLoggedInUser] = useState(null);
-const navigate = useNavigate();
 
 
     const loginUser = (userData , onSuccess) => {

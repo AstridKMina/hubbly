@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserPageContext";
 import { ErrorContext } from "../context/ErrorContext";
 import { getUsers } from "../services/api";
+import { Link, NavLink } from "react-router-dom";
 
 export const UserLoginModal = ({ setIsVisible, setIsUserLogged, isUserLogged }) => {
     const [user, setUser] = useState("")
@@ -69,19 +70,8 @@ export const UserLoginModal = ({ setIsVisible, setIsUserLogged, isUserLogged }) 
         }
 
         console.log(user, "mi user, vos sabes")
-        // if (loggedInUser) {
+    };
 
-        // } else {
-
-        // }
-    }
-
-
-    // if (loading) {
-    //     return <p>
-    //         loading......
-    //     </p>
-    // }
 
 
     return (
@@ -93,7 +83,9 @@ export const UserLoginModal = ({ setIsVisible, setIsUserLogged, isUserLogged }) 
                     <button className="modal-close-button" onClick={() => setIsVisible(false)}>X</button>
                     <div>
                         <img src={loggedInUser.avatar_url} alt={`${loggedInUser.username}'s avatar`} />
-                        <p>View Profile</p>
+                       <NavLink to={`/users/${loggedInUser.username}`} onClick={() => setIsVisible(false)}>
+                       <p>View Profile</p>
+                       </NavLink>
                     </div>
                     <p>Dark Mode</p>
                     <p onClick={() => {

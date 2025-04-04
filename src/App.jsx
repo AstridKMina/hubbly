@@ -12,6 +12,8 @@ import { TopicList } from './components/TopicList'
 import { ErrorProvider } from './context/ErrorContext'
 import { ErrorNotification } from './components/ErrorNotification'
 import { Footer } from './components/Footer'
+import { ArticlesProvider } from './context/HomeArticlesContext';
+import { NewArticle } from './components/NewArticle';
 
 function App() {
 
@@ -20,6 +22,7 @@ function App() {
     <>
       <UserProvider>
         <ErrorProvider>
+          <ArticlesProvider>
           <Header />
           <TopicList />
           <ErrorNotification/>
@@ -27,10 +30,14 @@ function App() {
             <Route path='/' element={<HomePage />} />
             <Route path='/articles' element={<ArticlesPage />} />
             <Route path='/articles/:id' element={<SoloArticlePage />} />
-            <Route path='/users' element={<UserPage />} />
+            <Route path='/users/:username' element={<UserPage />} />
+            <Route path="/new-article" element={<NewArticle />} />
+
+            
           </Routes>
           <ToastContainer />
           <Footer/>
+          </ArticlesProvider>
         </ErrorProvider>
       </UserProvider>
     </>

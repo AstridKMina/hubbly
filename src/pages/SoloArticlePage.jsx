@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react"
+import { ClipLoader } from 'react-spinners';
 import { getSoloArticle, updateArticleVotes } from "../services/api"
 import { useParams } from "react-router-dom";
 import { ArticleCommentsPage } from "./ArticleCommentsPage";
@@ -11,11 +12,11 @@ export const SoloArticlePage = () => {
     const [article, setArticle] = useState({});
     const [loading, setLoading] = useState(true);
     const [optimisticVotes, setOptimisticVotes] = useState(0);
-// const [error, setError] = useState(null)
 
-const {error,setErrorMessage} = useContext(ErrorContext);
-   
-const { id } = useParams();
+
+    const { error, setErrorMessage } = useContext(ErrorContext);
+
+    const { id } = useParams();
 
     useEffect(() => {
 
@@ -34,12 +35,13 @@ const { id } = useParams();
     }, [id]);
 
 
-    if (loading) {
-        return <p className="loadinng">loading......</p>
-    }
+    // if (loading) {
+    //     return <p className="loadinng">loading......</p>
+    // }
 
+    // Mirar si nos sirve de algo el useRef
 
-    const handleVotes = async (increment=true) => {
+    const handleVotes = async (increment = true) => {
 
         const vote = increment ? +1 : -1
 
@@ -47,10 +49,10 @@ const { id } = useParams();
 
         try {
             const updatedArticle = await updateArticleVotes(id, vote);
-            setOptimisticVotes(updatedArticle.votes); 
+            setOptimisticVotes(updatedArticle.votes);
         } catch (err) {
             console.error("Error updating votes:", error.message);
-            setOptimisticVotes(prevVotes => prevVotes - vote); 
+            setOptimisticVotes(prevVotes => prevVotes - vote);
             setErrorMessage(error.message || "Something went wrong!")
         }
 
@@ -60,34 +62,51 @@ const { id } = useParams();
 
     return (
         <article className="article-container">
-            <header className="article-header">
-                <h1>{article.title}</h1>
-            </header>
+            {loading ? (
+                < div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100vh',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: 'white',
+                    zIndex: 999
+                }}> <ClipLoader loading={loading} color="#36d7b7" size={90} /> </div>
+            ) : (
+                <>
+                    <header className="article-header">
+                        <h1>{article.title}</h1>
+                    </header>
 
-            <main className="article-content">
-                <img
-                    src={article.article_img_url}
-                    alt={article.title}
-                    className="article-image"
-                />
-                <div className="article-meta">
-                    <p className="article-author"><strong>By:</strong> {article.author}</p>
-                    <div className="article-votes">
-                        <button onClick={() => handleVotes(true)} className="article-votes-button" >
-                            <p>👍🏾</p>
-                        </button>
-                        <p><strong>Votes:</strong> {optimisticVotes}</p>
-                        <button onClick={() => handleVotes(false)} className="article-votes-button">
-                            <p>👎🏾</p>
-                        </button>
-                    </div>
-                    <p><strong>Comments:</strong> {article.comment_count}</p>
-                    <p><strong>Published on:</strong> <time>{new Date(article.created_at).toLocaleDateString()}</time></p>
-                </div>
-                <p className="article-body">{article.body}</p>
-               
-                <ArticleCommentsPage />
-            </main>
+                    <main className="article-content">
+                        <img
+                            src={article.article_img_url}
+                            alt={article.title}
+                            className="article-image"
+                        />
+                        <div className="article-meta">
+                            <p className="article-author"><strong>By:</strong> {article.author}</p>
+                            <div className="article-votes">
+                                <button onClick={() => handleVotes(true)} className="article-votes-button" >
+                                    <p>👍🏾</p>
+                                </button>
+                                <p><strong>Votes:</strong> {optimisticVotes}</p>
+                                <button onClick={() => handleVotes(false)} className="article-votes-button">
+                                    <p>👎🏾</p>
+                                </button>
+                            </div>
+                            <p><strong>Comments:</strong> {article.comment_count}</p>
+                            <p><strong>Published on:</strong> <time>{new Date(article.created_at).toLocaleDateString()}</time></p>
+                        </div>
+                        <p className="article-body">{article.body}</p>
+
+                        <ArticleCommentsPage />
+                    </main>
+                </>
+            )}
         </article>
     );
 };
