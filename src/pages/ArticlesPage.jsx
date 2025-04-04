@@ -11,16 +11,16 @@ export const ArticlesPage = () => {
     const [loading, setLoading] = useState(true);
     const [sort_by, setSort_by] = useState("")
     const [order_by, setOrder_by] = useState("")
-    // const [error, setError] = useState(null)
 
-        const {error,setErrorMessage} = useContext(ErrorContext);
-    
+
+    const { error, setErrorMessage } = useContext(ErrorContext);
+
 
     const [searchParams, setSearchParams] = useSearchParams()
 
     const articleTopic = searchParams.get("topic");
 
-    // console.log(articleTopic, "a ver ese topic")
+
 
     const validSortColumns = ["Date", "votes", "Comment count"];
     const validOrderValues = ["ASC", "DESC"];
@@ -57,12 +57,11 @@ export const ArticlesPage = () => {
 
         setSearchParams((prevParams) => {
             const updatedParams = new URLSearchParams(prevParams);
-
+            
             if (name === "sort_by") {
                 if (value === "Date") value = "created_at";
                 if (value === "Comment count") value = "comment_count";
                 updatedParams.set("sort_by", value);
-
             }
 
             if (name === "order") {

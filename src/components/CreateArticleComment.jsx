@@ -8,7 +8,6 @@ export const CreateArticleComment = ({ id, comments, setComments, setOptimisticC
     const { loggedInUser } = useContext(UserContext);
     const [newComment, setNewComment] = useState("");
     const [submitting, setSubmitting] = useState(false);
-    // const [error, setError] = useState(null);
 
     const {error,setErrorMessage} = useContext(ErrorContext);
 

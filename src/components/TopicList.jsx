@@ -10,7 +10,7 @@ export const TopicList = () => {
     const [loading, setLoading] = useState(true);
     // const [error, setError] = useState(null)
 
-    const {error,setErrorMessage} = useContext(ErrorContext);
+    const { error, setErrorMessage } = useContext(ErrorContext);
 
 
     useEffect(() => {
@@ -34,19 +34,26 @@ export const TopicList = () => {
         return <p className="loadinng">loading topics......</p>
     }
 
+
+
     return (
         <aside className="sidebar-container">
             <nav className="sidebar">
                 <ul>
-                    <Link to={"/"}>
-                        <h3>Home</h3>
-                    </Link>
-                    <Link to={"/"}>
-                        <h3>Articles</h3>
-                    </Link>
+                    <li>
+                        <Link to={"/"}>
+                            <h3> 🛖 Home</h3>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to={"/articles"}>
+                            <h3> 📜 Articles</h3>
+                        </Link>
+                    </li>
                     {topics.map((topic) => (
                         <li key={topic.slug}>
-                             <Link to={`?topic=${topic.slug}`}>  {/* Debo modificarlo despues */}
+                            <Link to={`articles?topic=${topic.slug}`} activeClassName="active">
+                            <span><img src={topic?.img_url} alt={`${topic.slug} avatar`}/></span>
                                 <h3>{topic.slug}</h3>
                             </Link>
                         </li>
@@ -54,6 +61,7 @@ export const TopicList = () => {
                 </ul>
             </nav>
         </aside>
-    )
+    );
+};
 
-}
+
