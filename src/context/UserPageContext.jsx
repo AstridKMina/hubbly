@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 export const UserContext = createContext();
 
 export const UserProvider = ({children}) => {
-    const [loggedInUser, setLoggedInUser] = useState();
+    const [loggedInUser, setLoggedInUser] = useState(null);
 const navigate = useNavigate();
 
 
@@ -15,7 +15,7 @@ const navigate = useNavigate();
             onSuccess(userData);
         };
 
-        navigate("/")
+       
     };
 
     return <UserContext.Provider value={{ loggedInUser: loggedInUser, setLoggedInUser:loginUser}}>

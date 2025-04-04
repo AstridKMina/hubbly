@@ -88,10 +88,6 @@ const { id } = useParams();
                
                 <ArticleCommentsPage />
             </main>
-
-            <footer className="article-footer">
-                <p>End of the article</p>
-            </footer>
         </article>
     );
 };

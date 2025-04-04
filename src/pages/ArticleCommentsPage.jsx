@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react"
+import { toast } from "react-toastify";
 import { deleteComment, getArticleComments } from "../services/api"
 import { useParams } from "react-router-dom";
 import { CreateArticleComment } from "../components/CreateArticleComment";
@@ -56,7 +57,7 @@ export const ArticleCommentsPage = () => {
             setOptimisticComments((prevComments) =>
                 prevComments.filter((comment) => comment.comment_id !== comment_id)
             );
-
+ toast.success("Comment deleted successfully!");
         } catch (error) {
             console.error("The comment has not been deleted", error.message);
             setErrorMessage(error.message || "Something went wrong!");
