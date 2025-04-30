@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react"
 import { ClipLoader } from 'react-spinners';
-import { getSoloArticle, updateArticleVotes } from "../services/api"
+import { getSoloArticle, updateArticleVotes } from "../../services/api"
 import { useParams } from "react-router-dom";
-import { ArticleCommentsPage } from "./ArticleCommentsPage";
-import { CreateArticleComment } from "../components/CreateArticleComment";
-import { ErrorContext } from "../context/ErrorContext";
+import { ArticleCommentsPage } from "../ArticleCommentsPage/ArticleCommentsPage";
+import { CreateArticleComment } from "../../components/CreateArticleComment/CreateArticleComment";
+import { ErrorContext } from "../../context/ErrorContext";
+import styles  from "./SoloArticlePage.module.css";
 
 
 export const SoloArticlePage = () => {
@@ -61,7 +62,7 @@ export const SoloArticlePage = () => {
 
 
     return (
-        <article className="article-container">
+        <article className={styles.articleContainer}>
             {loading ? (
                 < div style={{
                     position: 'absolute',
@@ -77,32 +78,31 @@ export const SoloArticlePage = () => {
                 }}> <ClipLoader loading={loading} color="#36d7b7" size={90} /> </div>
             ) : (
                 <>
-                    <header className="article-header">
+                    <header className={styles.articleHeader}>
                         <h1>{article.title}</h1>
                     </header>
 
-                    <main className="article-content">
+                    <main className={styles.articleContent}>
                         <img
                             src={article.article_img_url}
                             alt={article.title}
-                            className="article-image"
+                            className={styles.articleImage}
                         />
-                        <div className="article-meta">
-                            <p className="article-author"><strong>By:</strong> {article.author}</p>
-                            <div className="article-votes">
-                                <button onClick={() => handleVotes(true)} className="article-votes-button" >
+                        <div className={styles.articleMeta}>
+                            <p className={styles.articleAuthor}><strong>By:</strong> {article.author}</p>
+                            <div className={styles.articleVotes}>
+                                <button onClick={() => handleVotes(true)} className={styles.articleVotes_button} >
                                     <p>👍🏾</p>
                                 </button>
                                 <p><strong>Votes:</strong> {optimisticVotes}</p>
-                                <button onClick={() => handleVotes(false)} className="article-votes-button">
+                                <button onClick={() => handleVotes(false)} className={styles.articleVotes_button}>
                                     <p>👎🏾</p>
                                 </button>
                             </div>
                             <p><strong>Comments:</strong> {article.comment_count}</p>
                             <p><strong>Published on:</strong> <time>{new Date(article.created_at).toLocaleDateString()}</time></p>
                         </div>
-                        <p className="article-body">{article.body}</p>
-
+                        <p className={styles.articleBody}>{article.body}</p>
                         <ArticleCommentsPage />
                     </main>
                 </>

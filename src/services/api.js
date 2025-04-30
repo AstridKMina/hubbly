@@ -28,7 +28,7 @@ export const getArticles = async (sortBy, orderBy, articleTopic) => {
         if (orderBy) params.order = orderBy;
 
         const res = await apiArticles.get(`/articles`, { params }); 
-        return res.data;
+        return res.data.articles;
     } catch (error) {
         throw handleApiError(error, "Failed to fetch articles");
     } 

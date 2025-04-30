@@ -1,7 +1,11 @@
 import { useContext, useState } from "react";
-import { UserContext } from "../context/UserPageContext";
-import { UserLoginModal } from "../pages/UserLoginModal";
+import { UserContext } from "../../context/UserPageContext";
+import { UserLoginModal } from "../../pages/UserLoginModal/UserLoginModal";
 import { Link } from "react-router-dom";
+
+import { IoCreate } from "react-icons/io5";
+import styles from "./Header.module.css";
+import hubblyLogo from "../../assets/hubbly.png"
 
 export const Header = () => {
     const { loggedInUser } = useContext(UserContext);
@@ -9,17 +13,17 @@ export const Header = () => {
     const [isUserLogged, setIsUserLogged] = useState(false);
 
     return (
-        <header className="main-header">
-            <div className="header-container">
-            
-                <div className="logo">
-                    <h1> 🤩 Hubbly</h1>
+        <header className={styles.main}>
+            <div className={styles.header}>
+            <Link to={"/"}>
+                <div className={styles.mainLogo}>
+                  <img src={hubblyLogo} className={styles.headerLogo} alt="header-logo" />
                 </div>
-
-                <nav className="user-info">
+                </Link>
+                <nav className={styles.userInfo}>
                     {!isUserLogged ? (
                         <>
-                            <button className="login-button" onClick={() => setIsVisible(true)}>
+                            <button className={styles.loginButton} onClick={() => setIsVisible(true)}>
                                 Log In
                             </button>
                             {isVisible && (
@@ -33,10 +37,10 @@ export const Header = () => {
                     ) : (
                         <>
                         <Link to={"/new-article"} onClick={()=> setIsVisible(false)}>
-                         <h1>✍🏾</h1>
+                         <button className={styles.iconButton} ><IoCreate color="white"  size="2.1rem"/></button>
                          </Link>
                             <img 
-                                className="user-header-avatar" 
+                                className={styles.userAvatar}
                                 src={loggedInUser.avatar_url} 
                                 alt={`${loggedInUser.username}'s avatar`} 
                                 onClick={() => setIsVisible(true)} 

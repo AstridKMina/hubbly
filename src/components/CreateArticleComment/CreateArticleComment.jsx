@@ -1,8 +1,9 @@
 import { useContext, useState } from "react";
-import { createComment } from "../services/api";
-import { UserContext } from "../context/UserPageContext";
+import { createComment } from "../../services/api";
+import { UserContext } from "../../context/UserPageContext";
 import { toast } from "react-toastify";
-import { ErrorContext } from "../context/ErrorContext";
+import { ErrorContext } from "../../context/ErrorContext";
+import styles from "./CreateArticleComment.module.css";
 
 export const CreateArticleComment = ({ id, comments, setComments, setOptimisticComments }) => {
     const { loggedInUser } = useContext(UserContext);
@@ -64,20 +65,20 @@ export const CreateArticleComment = ({ id, comments, setComments, setOptimisticC
     };
 
     return (
-        <form onSubmit={handleSubmitComment} className="new-comment-form">
+        <form onSubmit={handleSubmitComment} className={styles.newComment_form}>
             <textarea
-                id="new-comment-textarea"
+                id={styles.newComment_textarea}
                 placeholder="Add a comment"
                 value={newComment}
                 onChange={(e) => handleOnChange(e)}
             />
             {error && <p style={{ color: "red" }}> {error}</p>}
             <button
-                className="new-comment-submit-button"
+                className={styles.newComment_submit_button}
                 type="submit"
                 disabled={submitting} 
             >
-                Submit
+                Send
             </button>
         </form>
     );

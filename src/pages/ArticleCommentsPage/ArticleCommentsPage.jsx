@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react"
 import { toast } from "react-toastify";
-import { deleteComment, getArticleComments } from "../services/api"
+import { deleteComment, getArticleComments } from "../../services/api"
 import { useParams } from "react-router-dom";
-import { CreateArticleComment } from "../components/CreateArticleComment";
-import { UserContext } from "../context/UserPageContext";
-import { ErrorContext } from "../context/ErrorContext";
+import { CreateArticleComment } from "../../components/CreateArticleComment/CreateArticleComment";
+import { UserContext } from "../../context/UserPageContext";
+import { ErrorContext } from "../../context/ErrorContext";
+import styles from "./ArticleCommentsPage.module.css";
 
 
 export const ArticleCommentsPage = () => {
@@ -68,17 +69,17 @@ export const ArticleCommentsPage = () => {
 
     return (
         <>
-            <section id="new-comment">
+            <section id={styles.newComment}>
                 <CreateArticleComment id={id} comments={comments} setComments={setComments} setOptimisticComments={setOptimisticComments} />
             </section>
-            <section className="comments-section">
+            <section className={styles.commentsSection}>
                 <h2>Comments</h2>
-                <ul className="comments-list">
+                <ul className={styles.commentsList}>
                     {comments.map((comment) => (
-                        <li key={comment.comment_id} className="comment-item">
-                            <div className="comment-author">
+                        <li key={comment.comment_id} className={styles.commentItem}>
+                            <div className={styles.commentAuthor}>
                                 <img
-                                    className="comment-avatar"
+                                    className={styles.commentAvatar}
                                     src="https://cdn-icons-png.flaticon.com/256/5953/5953843.png"
                                     alt="User avatar"
                                 />
@@ -87,19 +88,19 @@ export const ArticleCommentsPage = () => {
                                     <time>{new Date(comment.created_at).toLocaleDateString()}</time>
                                 </div>
                             </div>
-                            <p className="comment-body">{comment.body}</p>
-                            <div className="comment-votes">
-                                <button className="comment-votes-button">
+                            <p className={styles.commentBody}>{comment.body}</p>
+                            <div className={styles.commentVotes}>
+                                <button className={styles.commentVotes_button}>
                                     <p>👍🏾</p>
                                 </button>
                                 <p>Votes: {comment.votes}</p>
-                                <button className="comment-votes-button">
+                                <button className={styles.commentVotes_button}>
                                     <p>👎🏾</p>
                                 </button>
                             </div>
                             {loggedInUser && loggedInUser.username === comment.author && (
                             <button
-                                className="comment-delete-button"
+                                className={styles.commentDelete_button}
                                 onClick={() => handleDelete(comment.comment_id)}
                                 disabled={deletingCommentId === comment.comment_id}
                             >

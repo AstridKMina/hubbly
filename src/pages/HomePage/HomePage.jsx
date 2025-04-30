@@ -1,0 +1,107 @@
+import { useContext, useEffect, useState } from "react"
+import { ArticlesContext } from "../../context/HomeArticlesContext"
+import { ClipLoader } from "react-spinners";
+import { Link } from "react-router-dom";
+import styles from "./HomePage.module.css"
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+
+export const HomePage = ({ articles, loading }) => {
+  const { trendingArticles } = useContext(ArticlesContext);
+  const [sortedArticles, setSortedArticles] = useState([]);
+
+  useEffect(() => {
+    if (articles && articles.length > 0) {
+      const sorted = [...articles].sort((a, b) => b.votes - a.votes);
+      setSortedArticles(sorted.slice(0, 6));
+    }
+  }, [articles]);
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'auto';
+    }
+  }, []);
+
+
+
+  return (
+    <main className={styles.homeMain}>
+    {loading ? (
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "rgba(255, 255, 255, 0.9)",
+          zIndex: 9999,
+        }}
+      >
+        <ClipLoader loading={loading} color="#36d7b7" size={90} />
+      </div>
+    ) : (
+      <>
+        <header>
+          <h1 className={styles.title}>Trending Articles</h1>
+        </header>
+  
+        <section className={styles.collageContainer}>
+          {sortedArticles && sortedArticles.length > 0 ? (
+            <>
+              {/* 📱 Carrusel para pantallas pequeñas */}
+              <div className={styles.carouselWrapper}>
+                <Carousel
+                  responsive={{
+                    mobile: { breakpoint: { max: 468, min: 0 }, items: 1 }
+                  }}
+                  swipeable
+                  draggable
+                  showDots={true}
+                  arrows={false}
+                  
+                >
+                  {sortedArticles.map((article) => (
+                    <div key={article.article_id} className={styles.carouselItem}>
+                      <Link to={`/articles/${article.article_id}`}>
+                        <img src={article.article_img_url} alt="article" />
+                        <div className={styles.overlay}>
+                          <span className={styles.articleTitle}>{article.title}</span>
+                        </div>
+                      </Link>
+                    </div>
+                  ))}
+                </Carousel>
+              </div>
+  
+              {/* 🖥️ Collage para pantallas grandes */}
+              <div className={styles.wrapper}>
+                {sortedArticles.map((article, index) => (
+                  <div
+                    key={article.article_id}
+                    className={`${styles.collageItem} ${styles[`size${(index % 6) + 1}`]}`}
+                  >
+                    <Link to={`/articles/${article.article_id}`}>
+                      <img src={article.article_img_url} alt="article" />
+                      <div className={styles.overlay}>
+                        <span className={styles.articleTitle}>{article.title}</span>
+                      </div>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <p> No trending articles found. </p>
+          )}
+        </section>
+      </>
+    )}
+  </main>
+  );
+};

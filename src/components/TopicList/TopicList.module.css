@@ -1,0 +1,181 @@
+/* TopicList.module.css */
+
+.sidebarContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.sidebar {
+  position: fixed;
+  top: 12rem;
+  left: 0;
+  width: 12rem;
+  height: 50vh;
+  margin: 0.4rem;
+  padding: 1.3rem;
+  background-color: rgba(243, 151, 118, 0.193);
+  color: black;
+  border-radius: 5% 5%;
+  border-right: 1px solid #ddd;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  z-index: 1;
+}
+
+.sidebarUl {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarLi {
+  width: 100%;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  border-bottom: 1px solid rgba(59, 57, 46, 0.15);
+}
+
+.topicImg {
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.sidebarSpan {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1rem;
+  min-width: 3rem;
+}
+
+.sidebarH3 {
+  font-size: 1.1rem;
+  margin: 0;
+  padding: 0.8rem 0;
+  text-align: left;
+  color: black;
+  cursor: pointer;
+  transition: background-color 0.3s, padding-left 0.3s;
+}
+
+.sidebarH3Hover:hover {
+  background-color: #ddd;
+  padding-left: 1rem;
+}
+
+.sidebarLink {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+}
+
+.sidebarLinkHover:hover {
+  color: #333;
+}
+
+.sidebarLinkFocus:focus {
+  outline: 2px solid #007bff;
+}
+
+.sidebarActive {
+  font-weight: bold;
+  color: #007bff;
+}
+
+/* Loading */
+.loading {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 5rem;
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .sidebarContainer {
+    overflow: visible;
+    display: flex;
+    align-content: center;
+  }
+
+  .sidebar {
+    display: block;
+    width: 2.4rem;
+    height: 40vh;
+    border-radius: 1rem;
+    padding: 0.1rem;
+    overflow: visible;
+  }
+
+  .sidebarUl {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.1rem;
+    margin: 0;
+    list-style: none;
+    overflow: visible;
+  }
+
+  .sidebarLi {
+    position: relative;
+    overflow: visible;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 3rem;
+    width: 100%;
+    padding: 0 0.5rem;
+    border-bottom: 0;
+  }
+
+  .topicImg {
+    width: 1rem;
+    height: 1rem;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .sidebarSpan {
+    display: inline;
+  }
+
+  .sidebarH3 {
+    visibility: hidden;
+    background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 0.3rem;
+  padding: 6px 8px;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 130%;
+  transform: translateX(-40%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 0.85rem;
+  /* white-space: nowrap; */
+  }
+
+  .sidebarLi:hover .sidebarH3 {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .sidebarLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+}

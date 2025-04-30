@@ -1,0 +1,148 @@
+.userPageArticule {
+  height: 100%;
+    margin-left: 250px; 
+    padding: 2rem;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+  }
+  
+  .userPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin-bottom: 2rem;
+  }
+  
+  .userPageHeader {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .userPageH1 {
+    font-size: 2rem;
+    margin-bottom: 0.2rem;
+    color: #333;
+  }
+  
+  .userPageP {
+    font-size: 1.1rem;
+    color: #666;
+  }
+  
+  .userPageFigure {
+    margin: 1rem 0 0;
+    text-align: center;
+  }
+  
+  .userPageImg {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #ddd;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  
+  .userPageFigcaption {
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 0.5rem;
+  }
+  
+  .userArticles {
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  }
+  
+  .userArticlesH2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    color: #222;
+  }
+  
+  .userCardUl {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  
+  .userArticleCard {
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+  }
+  
+  .userArticleCardHover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .userArticleCardImg {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+  }
+  
+  .userArticleCardH3 {
+    font-size: 1.2rem;
+    margin: 1rem;
+    color: #333;
+  }
+  
+  .userArticleCardP {
+    margin: 0 1rem 1rem;
+    font-size: 0.95rem;
+    color: #555;
+  }
+
+
+  @media (max-width: 768px) {
+  .userPageArticule {
+      height: 100%;
+      margin-left: 6rem; 
+      padding: 2rem;
+      background-color: #f9f9f9;
+      box-sizing: border-box;
+    }
+
+    .userArticles {
+      width: 100%;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .userCardUl {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .userCardUl a{
+text-decoration: none;
+    }
+
+      
+  .userArticleCardH3 {
+    font-size: 1rem;
+    margin: 1rem;
+    color: #333;
+    text-decoration: none;
+  }
+  }

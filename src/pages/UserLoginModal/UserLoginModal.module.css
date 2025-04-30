@@ -1,0 +1,249 @@
+/* ========== BASE STYLES ========== */
+:root {
+  --modal-bg: rgba(0, 0, 0, 0.8);
+  --modal-radius: 12px;
+  --modal-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  --transition-fast: 0.3s ease;
+  --transition-smooth: 0.3s ease-in-out;
+}
+
+.modalBase {
+  position: fixed;
+  display: flex;
+  z-index: 100000;
+  border-radius: var(--modal-radius);
+  box-shadow: var(--modal-shadow);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/*  MODAL 1: LOGIN */
+.loginModal {
+  composes: modalBase;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--modal-bg);
+  z-index: 100000;
+}
+
+.modalContent {
+  position: relative;
+  background: var(--terciary-color);
+  padding: 2rem;
+  border-radius: var(--modal-radius);
+  box-shadow: var(--modal-shadow);
+  width: 22rem;
+  max-width: 90%;
+  text-align: center;
+  z-index: 100000;
+
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modalTitle {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.formGroup {
+  text-align: left;
+}
+
+.formGroup label {
+  font-weight: 600;
+  color: #444;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 2rem;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.formGroup input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+.inputHelperText {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.errorMessage {
+  color: #d9534f;
+  font-size: 0.9rem;
+  margin-top: -0.5rem;
+}
+
+.actionButton {
+  background: var(--secondary-color);
+  color: white;
+  width: 50%;
+  padding: 12px;
+  border: none;
+  border-radius: 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform 0.2s ease-in-out;
+}
+
+.actionButton:hover {
+  background: #b1c5db;
+}
+
+.actionButton:active {
+  transform: scale(0.95);
+}
+
+.modalCloseButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: #f4433688;
+  color: var(--terciary-color);
+  border: none;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 3rem;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), transform 0.2s ease;
+}
+
+.modalCloseButton:hover {
+  background-color: #d32f2f;
+  transform: rotate(90deg);
+}
+
+.modalCloseButton:active {
+  transform: scale(0.95);
+}
+
+/* ========== MODAL 2: USER MENU ========== */
+.userDropdownModal {
+  composes: modalBase;
+  top: 19%;
+  right: 0;
+  background: white;
+  padding: 1.5rem;
+  flex-direction: column;
+  width: 23rem;
+  border-radius: 8px 0 0 8px;
+  box-shadow: -4px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.userDropdownModal img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+
+/* @media (max-width: 600px) {
+  .userDropdownModal {
+    width: 100%;
+    right: 0;
+    left: 0;
+    top: auto;
+    bottom: 0;
+    border-radius: 12px 12px 0 0;
+  }
+} */
+
+/* ========== DROPDOWN MENU (e.g. navbar) ========== */
+.dropdownNav {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: flex-start;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+}
+
+.dropdownItem {
+  background: transparent;
+  border: none;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  text-decoration: none;
+  color: #333;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.dropdownItem:hover {
+  color: var(--secondary-color);
+  background-color: transparent;
+}
+
+.iconTextWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dropdownItem span {
+  flex: 1;
+}
+
+.modalCloseButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: #f4433688;
+  color: var(--terciary-color);
+  border: none;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 3rem;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), transform 0.2s ease;
+}
+
+.modalCloseButton:hover {
+  background-color: #d32f2f;
+  transform: rotate(90deg);
+}
+
+.modalCloseButton:active {
+  transform: scale(0.95);
+}
+
+
+/* ========== ACCESSIBILITY ========== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
