@@ -63,4 +63,14 @@
     .articleCardContent {
         display: none;
     }
+
+    .articleCardTitle {
+        font-size: 1rem;
+        font-weight: bold;
+        margin: 0;
+        padding: 0 0 15px 0;
+        color: #333;
+        text-align: center;
+        transition: color 0.3s ease;
+    }
 }

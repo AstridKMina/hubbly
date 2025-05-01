@@ -39,9 +39,6 @@ function App() {
       try {
         const articlesData = await getArticles(sort_by, order_by, articleTopic);
         setArticles(articlesData);
-        // setTrendingArticles(articlesData)
-        console.log("Articles en page:", articlesData);
-
       } catch (error) {
         console.error('Error fetching articles:', error);
         setErrorMessage(error.message || "Something went wrong!")

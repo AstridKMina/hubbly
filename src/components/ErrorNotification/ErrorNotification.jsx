@@ -1,18 +1,22 @@
 import React, { useContext } from 'react';
 import { ErrorContext } from '../../context/ErrorContext';
-import styles from "./ErrorNotification.module.css";
+import styles from './ErrorNotification.module.css';
 
 export const ErrorNotification = () => {
-    const { error } = useContext(ErrorContext);
+  const { error } = useContext(ErrorContext);
 
+  if (!error) return null;
 
-    if (!error) return null;
-
-    return (
-        <div className={styles.error}>
-            <p>{error}</p>
-            <button onClick={() => window.location.reload()}> Try again! </button>
-        </div>
-    );
+  return (
+    <section className={styles.error} role="alert">
+      <p id="error-message">{error}</p>
+      <button
+        type="button"
+        onClick={() => window.location.reload()}
+        aria-describedby="error-message"
+      >
+        Try again!
+      </button>
+    </section>
+  );
 };
-

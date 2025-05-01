@@ -36,11 +36,6 @@ export const SoloArticlePage = () => {
     }, [id]);
 
 
-    // if (loading) {
-    //     return <p className="loadinng">loading......</p>
-    // }
-
-    // Mirar si nos sirve de algo el useRef
 
     const handleVotes = async (increment = true) => {
 
@@ -62,51 +57,82 @@ export const SoloArticlePage = () => {
 
 
     return (
-        <article className={styles.articleContainer}>
-            {loading ? (
-                < div style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100vh',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: 'white',
-                    zIndex: 999
-                }}> <ClipLoader loading={loading} color="#36d7b7" size={90} /> </div>
-            ) : (
-                <>
-                    <header className={styles.articleHeader}>
-                        <h1>{article.title}</h1>
-                    </header>
-
-                    <main className={styles.articleContent}>
-                        <img
-                            src={article.article_img_url}
-                            alt={article.title}
-                            className={styles.articleImage}
-                        />
-                        <div className={styles.articleMeta}>
-                            <p className={styles.articleAuthor}><strong>By:</strong> {article.author}</p>
-                            <div className={styles.articleVotes}>
-                                <button onClick={() => handleVotes(true)} className={styles.articleVotes_button} >
-                                    <p>👍🏾</p>
-                                </button>
-                                <p><strong>Votes:</strong> {optimisticVotes}</p>
-                                <button onClick={() => handleVotes(false)} className={styles.articleVotes_button}>
-                                    <p>👎🏾</p>
-                                </button>
-                            </div>
-                            <p><strong>Comments:</strong> {article.comment_count}</p>
-                            <p><strong>Published on:</strong> <time>{new Date(article.created_at).toLocaleDateString()}</time></p>
-                        </div>
-                        <p className={styles.articleBody}>{article.body}</p>
-                        <ArticleCommentsPage />
-                    </main>
-                </>
-            )}
+        <article className={styles.articleContainer} aria-label="Article details">
+          {loading ? (
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100vh',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'white',
+                zIndex: 999,
+              }}
+              role="status"
+              aria-live="polite"
+            >
+              <ClipLoader loading={loading} color="#36d7b7" size={90} />
+              <span className={styles.srOnly}>Loading article...</span>
+            </div>
+          ) : (
+            <>
+              <header className={styles.articleHeader}>
+                <h1>{article.title}</h1>
+              </header>
+      
+              <main
+                className={styles.articleContent}
+                aria-label="Article content"
+              >
+                <img
+                  src={article.article_img_url}
+                  alt={`Image for ${article.title}`}
+                  className={styles.articleImage}
+                />
+                <div className={styles.articleMeta}>
+                  <p className={styles.articleAuthor}>
+                    <strong>By:</strong> {article.author}
+                  </p>
+                  <div className={styles.articleVotes}>
+                    <button
+                      type="button"
+                      onClick={() => handleVotes(true)}
+                      className={styles.articleVotes_button}
+                      aria-label={`Upvote article: ${article.title}`}
+                    >
+                      <p>👍🏾</p>
+                    </button>
+                    <p>
+                      <strong>Votes:</strong> {optimisticVotes}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => handleVotes(false)}
+                      className={styles.articleVotes_button}
+                      aria-label={`Downvote article: ${article.title}`}
+                    >
+                      <p>👎🏾</p>
+                    </button>
+                  </div>
+                  <p>
+                    <strong>Comments:</strong> {article.comment_count}
+                  </p>
+                  <p>
+                    <strong>Published on:</strong>{' '}
+                    <time dateTime={article.created_at}>
+                      {new Date(article.created_at).toLocaleDateString()}
+                    </time>
+                  </p>
+                </div>
+                <p className={styles.articleBody}>{article.body}</p>
+                <ArticleCommentsPage />
+              </main>
+            </>
+          )}
         </article>
-    );
+      );
 };

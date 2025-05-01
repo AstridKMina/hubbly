@@ -27,8 +27,6 @@ export const UserLoginModal = ({ setIsVisible, setIsUserLogged, isUserLogged }) 
             try {
                 const usersData = await getUsers();
                 setUsers(usersData);
-                console.log(loggedInUser, "usuarios")
-
             } catch (error) {
                 setErrorMessage(error.message || "Something went wrong!")
             } finally {
@@ -54,9 +52,7 @@ export const UserLoginModal = ({ setIsVisible, setIsUserLogged, isUserLogged }) 
         e.preventDefault();
 
         if (users.length > 0) {
-            console.log(user, "el usuario")
             const myUser = users.find((userLog) => userLog.username === user);
-
             if (myUser) {
                 setLoggedInUser(myUser);
                 setIsUserLogged(true)
@@ -71,95 +67,133 @@ export const UserLoginModal = ({ setIsVisible, setIsUserLogged, isUserLogged }) 
             }
         }
 
-        console.log(user, "mi user, vos sabes")
     };
 
 
     return (
-        <div className={isUserLogged ? styles.userDropdownModal : styles.loginModal}>
-            <div className={styles.modalContent}>
-                {isUserLogged ? (
-                    <>
-                        <h1>{loggedInUser.username}</h1>
-                        <button className={styles.modalCloseButton} onClick={() => setIsVisible(false)}>X</button>
-                        <div>
-                            <img src={loggedInUser.avatar_url} alt={`${loggedInUser.username}'s avatar`} />
-                        </div>
-                        <nav className={styles.dropdownNav}>
-                            <button
-                                onClick={() => {
-                                    setIsVisible(false);
-                                    navigate(`/users/${loggedInUser.username}`);
-                                }}
-                                className={styles.dropdownItem}
-                            >
-                                <span className={styles.iconTextWrapper}>
-                                    <CgProfile />
-                                    <span>View Profile</span>
-                                </span>
-                            </button>
-
-
-                            <button className={styles.dropdownItem}>
-                                <span className={styles.iconTextWrapper}><CgDarkMode /> <span>Dark Mode</span></span>
-                            </button>
-
-                            <button
-                                onClick={() => {
-                                    setIsVisible(false);
-                                    setLoggedInUser(null);
-                                    setIsUserLogged(false);
-                                }}
-                                className={styles.dropdownItem}
-                            >
-                                <span className={styles.iconTextWrapper}><LuLogOut /> <span>Log Out</span></span>
-                            </button>
-                        </nav>
-                    </>
-                ) : (
-                    <>
-                        <button
-                            className={styles.modalCloseButton}
-                            aria-label="Close login modal"
-                            onClick={() => setIsVisible(false)}
-                        >
-                            &times;
-                        </button>
-
-                        <h1 className={styles.modalTitle}>Log In</h1>
-
-                        <form className={styles.modalForm} onSubmit={handleLogin}>
-                            <fieldset className={styles.formGroup}>
-                                <label htmlFor="username">Username</label>
-                                <input
-                                    value={user}
-                                    type="text"
-                                    id="username"
-                                    placeholder="Enter your username"
-                                    required
-                                    onChange={handleUsername}
-                                    aria-describedby="usernameHelp"
-                                />
-                            </fieldset>
-
-                            <fieldset className={styles.formGroup}>
-                                <label htmlFor="password">Password</label>
-                                <input
-                                    type="password"
-                                    id="password"
-                                    placeholder="Enter your password"
-                                    required
-                                />
-                            </fieldset>
-
-                            {err && <p className={styles.errorMessage}>{err}</p>}
-                            <fieldset>
-                                <button type="submit" className={styles.actionButton}>Log In</button>
-                            </fieldset>
-                        </form>
-                    </>
-                )}
-            </div>
+        <div
+          className={isUserLogged ? styles.userDropdownModal : styles.loginModal}
+          role="dialog"
+          aria-labelledby={isUserLogged ? 'user-profile-title' : 'login-title'}
+          aria-modal="true"
+        >
+          <div className={styles.modalContent}>
+            {isUserLogged ? (
+              <>
+                <h1 id="user-profile-title">{loggedInUser.username}</h1>
+                <button
+                  className={styles.modalCloseButton}
+                  aria-label="Close user profile modal"
+                  onClick={() => setIsVisible(false)}
+                >
+                  X
+                </button>
+                <div>
+                  <img
+                    src={loggedInUser.avatar_url}
+                    alt={`${loggedInUser.username}'s avatar`}
+                  />
+                </div>
+                <nav className={styles.dropdownNav} aria-label="User profile options">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsVisible(false);
+                      navigate(`/users/${loggedInUser.username}`);
+                    }}
+                    className={styles.dropdownItem}
+                    aria-label={`View profile for ${loggedInUser.username}`}
+                  >
+                    <span className={styles.iconTextWrapper}>
+                      <CgProfile />
+                      <span>View Profile</span>
+                    </span>
+                  </button>
+      
+                  <button
+                    type="button"
+                    className={styles.dropdownItem}
+                    aria-label="Toggle dark mode"
+                  >
+                    <span className={styles.iconTextWrapper}>
+                      <CgDarkMode />
+                      <span>Dark Mode</span>
+                    </span>
+                  </button>
+      
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsVisible(false);
+                      setLoggedInUser(null);
+                      setIsUserLogged(false);
+                    }}
+                    className={styles.dropdownItem}
+                    aria-label="Log out"
+                  >
+                    <span className={styles.iconTextWrapper}>
+                      <LuLogOut />
+                      <span>Log Out</span>
+                    </span>
+                  </button>
+                </nav>
+              </>
+            ) : (
+              <>
+                <button
+                  className={styles.modalCloseButton}
+                  aria-label="Close login modal"
+                  onClick={() => setIsVisible(false)}
+                >
+                  ×
+                </button>
+      
+                <h1 className={styles.modalTitle} id="login-title">
+                  Log In
+                </h1>
+      
+                <form className={styles.modalForm} onSubmit={handleLogin}>
+                  <fieldset className={styles.formGroup}>
+                    <label htmlFor="username">Username</label>
+                    <input
+                      value={user}
+                      type="text"
+                      id="username"
+                      placeholder="Enter your username"
+                      required
+                      onChange={handleUsername}
+                      aria-describedby={err ? 'login-error' : 'usernameHelp'}
+                    />
+                    <span id="usernameHelp" className={styles.srOnly}>
+                      Enter your username to log in
+                    </span>
+                  </fieldset>
+      
+                  <fieldset className={styles.formGroup}>
+                    <label htmlFor="password">Password</label>
+                    <input
+                      type="password"
+                      id="password"
+                      placeholder="Enter your password"
+                      required
+                      aria-describedby={err ? 'login-error' : undefined}
+                    />
+                  </fieldset>
+      
+                  {error && (
+                    <p id="login-error" className={styles.errorMessage}>
+                      {error}
+                    </p>
+                  )}
+                  <fieldset>
+                    <button type="submit" className={styles.actionButton}>
+                      Log In
+                    </button>
+                  </fieldset>
+                </form>
+              </>
+            )}
+          </div>
         </div>
-    )
+      );
 }

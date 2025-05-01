@@ -45,6 +45,10 @@
     border-radius: 50%;
 }
 
+.commentInfo {
+    display: contents;
+}
+
 .commentVotes_button {
     background-color: #fff;
     text-align: center;
@@ -84,6 +88,7 @@
     border: none;
     height: 2rem;
     padding: 1px 6px;
+    margin: 0.6rem;
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
@@ -96,4 +101,29 @@
 
 .commentDelete_button:active {
     transform: scale(0.95);
+}
+
+
+@media (max-width:468px) {
+
+    .commentInfo {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.8rem;
+    }
+
+   .commentBody {
+    font-size: 0.8rem;
+    margin: 1rem;
+   } 
+
+   .commentVotes {
+    font-size: 0.8rem;
+   }
+
+   .commentVotes_button {
+ 
+    padding: 0;
+
+   }
 }
