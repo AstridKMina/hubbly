@@ -1,12 +1,15 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { ClipLoader } from 'react-spinners';
 import { ArticlesList } from "../../components/ArticlesList/ArticlesList";
 import styles from "./ArticlesPage.module.css";
+import { ErrorContext } from "../../context/ErrorContext";
 
-export const ArticlesPage = ({order_by, sort_by, articleTopic, setOrder_by,setSort_by, articles, loading, setSearchParams}) => {
+export const ArticlesPage = ({ order_by, sort_by, articleTopic, setOrder_by, setSort_by, articles, loading, setSearchParams }) => {
 
 
     const [selectValue, setSelectValue] = useState("");
+    const { error, setErrorMessage } = useContext(ErrorContext);
+
     const validSortColumns = ["Date", "votes", "Comment count"];
     const validOrderValues = ["ASC", "DESC"];
 
@@ -17,11 +20,11 @@ export const ArticlesPage = ({order_by, sort_by, articleTopic, setOrder_by,setSo
         setSelectValue(e.target.value);
         setSearchParams((prevParams) => {
             const updatedParams = new URLSearchParams(prevParams);
-            
+
             if (name === "sort_by") {
                 if (value === "Date") value = "created_at";
                 if (value === "Comment count") value = "comment_count";
-               
+
                 updatedParams.set("sort_by", value);
             }
 
@@ -46,42 +49,69 @@ export const ArticlesPage = ({order_by, sort_by, articleTopic, setOrder_by,setSo
     };
 
 
-    console.log("articles:", articles.length)
 
     return (
-        <section className={styles.articlesContainer}>
+        <section className={styles.articlesContainer} aria-label="Articles list">
             {loading ? (
-                <div className={styles.loadingWrapper}>
+                <div
+                    className={styles.loadingWrapper}
+                    role="status"
+                    aria-live="polite"
+                >
                     <ClipLoader loading={loading} color="#36d7b7" size={90} />
+                    <span className={styles.srOnly}>Loading articles...</span>
                 </div>
             ) : (
                 <>
-                    <h2>Articles</h2>
+                    <h1>Articles</h1>
 
                     <div className="selectDiv">
-                        <select name="sort_by" id="sort-by-select" onChange={handleSortChange} value={sort_by}>
-                            <option value="">Sort by</option>
-                            {validSortColumns.map((sortType) => (
-                                <option value={sortType} key={sortType}>
-                                    {sortType}
-                                </option>
-                            ))}
-                        </select>
+                        <label htmlFor="sort-by-select">
+                            <select
+                                name="sort_by"
+                                id="sort-by-select"
+                                onChange={handleSortChange}
+                                value={sort_by}
+                                aria-describedby={error ? 'sort-error' : undefined}
+                            >
+                                <option value="">Sort by</option>
+                                {validSortColumns.map((sortType) => (
+                                    <option value={sortType} key={sortType}>
+                                        {sortType}
+                                    </option>
+                                ))}
+                            </select>
+                        </label>
 
-                        <select name="order" id="order-select" onChange={handleSortChange} value={order_by}>
-                            <option value="">Order by</option>
-                            {validOrderValues.map((orderValue) => (
-                                <option value={orderValue} key={orderValue}>
-                                    {orderValue}
-                                </option>
-                            ))}
-                        </select>
+                        <label htmlFor="order-select">
+                            <select
+                                name="order"
+                                id="order-select"
+                                onChange={handleSortChange}
+                                value={order_by}
+                                aria-describedby={error ? 'sort-error' : undefined}
+                            >
+                                <option value="">Order by</option>
+                                {validOrderValues.map((orderValue) => (
+                                    <option value={orderValue} key={orderValue}>
+                                        {orderValue}
+                                    </option>
+                                ))}
+                            </select>
+                        </label>
                     </div>
 
                     {articles.length > 0 ? (
                         <ArticlesList articles={articles} />
                     ) : (
-                        <p className={styles.noArticlesFound}>No articles found.</p>
+                        <p className={styles.noArticlesFound} id="no-articles">
+                            No articles found.
+                        </p>
+                    )}
+                    {error && (
+                        <p id="sort-error" className={styles.error}>
+                            {error}
+                        </p>
                     )}
                 </>
             )}

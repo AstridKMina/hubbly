@@ -7,8 +7,6 @@ export const ArticlesProvider = ({ children }) => {
     const [topicsList, setTopicsList] = useState([]);
 
 
-
-
     return <ArticlesContext.Provider value={{trendingArticles , setTrendingArticles, topicsList, setTopicsList}} >
         {children}
     </ArticlesContext.Provider>
